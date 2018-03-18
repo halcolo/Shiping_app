@@ -1,41 +1,42 @@
  <?php
+ /**
+ This archive is used to add an order to the data base.
+ */
 
-    session_start();
-    require_once('../model/connection.php');
 
-$id_order = filter_input(INPUT_POST, 'id_order');
+//Imports, Start the session and unnable the notice
+error_reporting(E_ALL ^ E_NOTICE);
+session_start();
+require_once('../model/connection.php');
+
+
+//vars post of vendors
 $content = filter_input(INPUT_POST, 'content');
 $tracking = filter_input(INPUT_POST, 'tracking');
+$expected = filter_input(INPUT_POST, 'expected');
 $vendor = filter_input(INPUT_POST, 'vendor');
 $typid = filter_input(INPUT_POST, 'typid');
 $idreceiv = filter_input(INPUT_POST, 'idreceiv');
-$name = filter_input(INPUT_POST, 'name');
-$addr = filter_input(INPUT_POST, 'addr');
-$city = filter_input(INPUT_POST, 'city');
+$name = filter_input(INPUT_POST, utf8_encode ('name'));
+$addr = filter_input(INPUT_POST, utf8_encode ('addr'));
+$city = filter_input(INPUT_POST, utf8_encode ('city'));
 $phone = filter_input(INPUT_POST, 'phone');
-$email = filter_input(INPUT_POST, 'email');
+$email = filter_input(INPUT_POST, utf8_encode ('email'));
 $departure = filter_input(INPUT_POST, 'departure');
-$delivery = filter_input(INPUT_POST, 'delivery');
 $status = 0;
 
 
+//Query
+$sql_insert_order = "INSERT INTO table_order (content, tracking, days_expected, status, id_vendor,type_id,id_receiver,name_receiver,address_receiver,city_receiver,telephone_receiver,email_receiver,departure_date,delivery_date,creation_date)
+VALUES ('$content', '$tracking', '$expected', '0', '$vendor', '$typid', '$idreceiv','$name', '$addr', '$city', '$phone', '$email', '$departure', NULL, sysdate());";
 
-function insert_order(){
-    
-$sql_insert_order = "INSERT INTO table_order (id_order, content, tracking, days_expected, id_vendor, type_id, id_receiver, name_receiver, address_receiver, city_receiver, telephone_receiver, email_receiver, departure_date, delivery_date, creation_date)
-VALUES ('10001221', 'Tecnology','HJT12345687', '6', '2', '1',1,'PEREZ RIVAS FERNANDO MAURICIO','CL 90 # 9 - 06','Medellín','3118443423', 'mail@mail.com', sysdate(), NULL, sysdate());)";
-
-if ($sql_insert_order === TRUE) {
-    echo $_SESSION['resp'] ="The order is now in the Database";
+//Validation
+if ($connection->query($sql_insert_order) === TRUE) {
+    echo $_SESSION['resp'] ="The order is now in the Database.";
 } else {
-    echo $_SESSION['resp']  = "Error: " . $sql_insert_order . "<br>" ;
+    echo $_SESSION['resp']  = "Error: " . $sql_insert_order . "<br>". $connection->error;
 }
 
-}
-
-
-$conn->close();
-
+//Finish connection and return
+$connection->close();
 header('Location: ../order.php');
-
-

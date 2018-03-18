@@ -28,14 +28,14 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `table_order`
 --
 
+
 DROP TABLE IF EXISTS `table_order`;
 CREATE TABLE IF NOT EXISTS `table_order` (
-  `sec_order` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Order_secuence',
-  `id_order` int(30) NOT NULL COMMENT 'Id of the order',
+  `id_order` int(30) NOT NULL AUTO_INCREMENT COMMENT 'Id of the order',
   `content` varchar(50) NOT NULL COMMENT 'Content of the order like technology, ofimatic... etc.',
   `tracking` varchar(50) NOT NULL COMMENT 'id of the tracking',
   `days_expected` int(100) NOT NULL COMMENT 'status of the order',
-  `status` int(30) NOT NULL COMMENT 'status of the order',
+  `status` varchar(50) NOT NULL COMMENT 'status of the order',
   `id_vendor` int(20) NOT NULL COMMENT 'id to know the vendor of the order',
   `type_id` int(5) NOT NULL COMMENT 'Type id of the receiver',
   `id_receiver` varchar(20) NOT NULL COMMENT 'number id of the receiver',
@@ -45,10 +45,10 @@ CREATE TABLE IF NOT EXISTS `table_order` (
   `telephone_receiver` varchar(20) NOT NULL COMMENT 'receiver data',
   `email_receiver` varchar(50) NOT NULL COMMENT 'receiver data',
   `departure_date` date NOT NULL COMMENT 'departure_date',
-  `delivery_date` date NOT NULL COMMENT 'delivery_date',
+  `delivery_date` date DEFAULT NULL COMMENT 'delivery_date',
   `creation_date` date NOT NULL COMMENT 'Creation of the register',
-  PRIMARY KEY (`sec_order`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id_order`)
+) ENGINE=MyISAM AUTO_INCREMENT=1001 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 

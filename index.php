@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -6,12 +6,21 @@ and open the template in the editor.
 -->
 
 <?php
+//Start the session and unnable the notice
+error_reporting(E_ALL ^ E_NOTICE);
+session_start();
+//Connection
 require_once('model/connection.php');
-$query ="SELECT * FROM  table_order WHERE status != '3' ORDER BY sec_order DESC";
+//This is the query to print the db data in the table
+$query ="SELECT * FROM  table_order WHERE status = '0' ORDER BY id_order DESC";
 $result = mysqli_query($connection ,$query);
+//This is the function to controll the dates calculator, if the actual date is not grater than the delivery date this function shows  a green truck.
+require_once('controller/function/calculate_dates.php');
+
+
 ?>
 <html>
-    <head>
+  <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,6 +53,7 @@ $result = mysqli_query($connection ,$query);
 				<a class="navbar-brand" href="index.php"><img src="img/logo_fit3_white.png" style="max-width:120px; margin: -7px;" name="Inicio"></a>
 				<div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="vendor.php">Create vendor</a>
 					<div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="order.php">Add order</a></li>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="mod_order.php">Dashboard order</a></li>
 						<div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" target="_blank" href="https://www.negotiatus.com/">Negotiatus page</a></li>
 
 
@@ -67,27 +77,42 @@ $result = mysqli_query($connection ,$query);
                               <td>Name</td>
                               <td>ID Tracking</td>
                               <td>Delivery City</td>
-                              <td>status</td>
+                              <td>Departure date</td>
+                              <td>Delivery expected date</td>
+                              <td>Status</td>
                          </tr>
                     </thead>
                     <?php
-                    
+
+
+
+
                     while($row = mysqli_fetch_array($result))
                     {
-                         echo '
+                        //Print the values of the tabler
+                        echo '
                          <tr>
                               <td>'.$row["id_order"].'</td>
                               <td>'.$row["id_receiver"].'</td>
                               <td>'.utf8_encode ( $row["name_receiver"]).'</td>
                               <td>'.$row["tracking"].'</td>
                               <td>'.utf8_encode ( $row["city_receiver"]).'</td>
-                              <td>'.$row["status"].'</td>
+                              <td>'.$row["departure_date"].'</td>
+                              <td>'.delivery_expected($row["departure_date"],$row["days_expected"]).'</td>
+                              <td>'.val_status($row["departure_date"],$row["days_expected"],date("Y-m-d")).'</td>
                          </tr>
                          ';
+
                     }
+
+
+
+
                     ?>
                     </table>
                   </div>
+
+
 
 
       					</div>
@@ -95,13 +120,11 @@ $result = mysqli_query($connection ,$query);
       			</div>
       			</div>
 
-
-
-
     </body>
 </html>
-<script>  
- $(document).ready(function(){  
-      $('#employee_data').DataTable();  
- });  
- </script>  
+<!--The next script call the table filters and pagination-->
+<script>
+ $(document).ready(function(){
+      $('#employee_data').DataTable();
+ });
+ </script>
