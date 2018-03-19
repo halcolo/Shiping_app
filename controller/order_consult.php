@@ -9,25 +9,31 @@ require_once('function/change_data.php');
 //Var post
 $order = filter_input(INPUT_POST, 'order');
 
+//******************************************************************************
 
 //Query
-$query ="SELECT * FROM  table_order WHERE id_order = '$order' ORDER BY id_order DESC";
+$query ="SELECT cl.id_client, cl.name_client, cl.address_client, ct.name_city, os.tracking, os.status, os.Content, v.id_vendor, os.expected_date
+FROM  order_shipment os, client cl, city ct, vendor v
+WHERE id_order = '$order'
+AND os.id_vendor = v.id_vendor
+AND os.id_client = cl.id_client
+AND cl.city_client = ct.id_city;";
 $result = mysqli_query($connection ,$query);
 
 //Create the while to chow the regist
     while($row = mysqli_fetch_array($result))
     {
-        echo $_SESSION['id_order'] = $row["id_order"];
-        echo $_SESSION['content'] = $row["content"];
+        echo $_SESSION['id_client'] = $row["id_client"];
+        echo $_SESSION['name_client'] = utf8_encode ( $row["name_client"]);
+        echo $_SESSION['address_client'] = $row["address_client"];
+        echo $_SESSION['name_city'] = utf8_encode ( $row["name_city"]);
+        echo $_SESSION['content'] = $row["Content"];
         echo $_SESSION['tracking'] = $row["tracking"];
         echo $_SESSION['status'] = status($row["status"]);
         echo $_SESSION['id_vendor'] = $row["id_vendor"];
-        echo $_SESSION['type_id'] = type_id($row["type_id"]);
-        echo $_SESSION['id_receiver'] = $row["id_receiver"];
-        echo $_SESSION['name_receiver'] = utf8_encode ( $row["name_receiver"]);
-        echo $_SESSION['address_receiver'] = $row["address_receiver"];
-        echo $_SESSION['city_receiver'] = utf8_encode ( $row["city_receiver"]);
-        echo $_SESSION['departure_date'] = $row["departure_date"];
+        echo $_SESSION['expected_date'] = $row["expected_date"];
+
+
     }
 
 //Finish connection and return

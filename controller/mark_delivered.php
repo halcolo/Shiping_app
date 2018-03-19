@@ -13,14 +13,16 @@ require_once('../model/connection.php');
 $order_to_mark = filter_input(INPUT_POST, 'order_to_mark');
 $status = filter_input(INPUT_POST, 'status');
 
+//******************************************************************************
+
 //Query
-$sql_mark_order = "UPDATE table_order SET delivery_date = sysdate(), status = '$status' WHERE id_order = '$order_to_mark';";
+$sql_mark_order = "UPDATE order_shipment SET delivered_date = sysdate(), status = '$status' WHERE id_order = '$order_to_mark';";
 
 //Validation
 if ($connection->query($sql_mark_order) === TRUE) {
   echo $_SESSION['resp'] ="Order ".$order_to_mark." is marked as delivered.";
 } else {
-  echo $_SESSION['resp']  = "Error: " . $sql_mark_order . "<br>". mysqli_error($connection);
+  echo $_SESSION['resp']  = "Error: " . $sql_mark_order . "<br>". $mysqli->error;
 }
 
 //Finish connection and return

@@ -11,13 +11,17 @@ $arrContextOptions=array(
 // config parameters
 $api_key = "AIzaSyAJb4AB6sspkdtXONhfzfMFf3BguUG2k48";
 
-$addres = urlencode(trim($_SESSION["address_receiver"]));
-$city = urlencode(trim($_SESSION["city_receiver"]));
+$addres = urlencode(trim($_SESSION["address_client"]));
+$city = urlencode(trim($_SESSION["name_city"]));
+
+//******************************************************************************
 
 // Webservices
 $google_maps_url   = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $addres . "," . $city . "&key=" . $api_key;
 $google_maps_json  = file_get_contents($google_maps_url, false, stream_context_create($arrContextOptions));
 $google_maps_array = json_decode($google_maps_json, true);
+
+//******************************************************************************
 
 // Get Location
 $latitude          = ($google_maps_array["results"][0]["geometry"]['location']['lat']);

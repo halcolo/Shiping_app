@@ -4,7 +4,9 @@ error_reporting(E_ALL ^ E_NOTICE);
 session_start();
 //Connection and map import
 require_once('model/connection.php');
-require_once('controller\map_controll.php');
+//In this php file the map recieve the address and the city
+require_once('controller/map_controll.php')
+
 ?>
 
 
@@ -20,7 +22,7 @@ require_once('controller\map_controll.php');
 <script data-rocketsrc="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js" data-rocketoptimized="true" type="text/javascript" async=""></script>
 <script type="text/javascript" src="https://ajax.cloudflare.com/cdn-cgi/scripts/b7ef205d/cloudflare-static/rocket.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700&amp;subset=latin" media="all">
-<title>Webslesson Tutorial | Datatables Jquery Plugin with Php MySql and Bootstrap</title>
+<title>Negotiatus</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -35,7 +37,7 @@ require_once('controller\map_controll.php');
 <!--Style for the map-->
 <style>
     #map{
-        width: 100%;
+        width: 70%;
         height: 400px;
         border: #2c3e50 solid;
         border-width: 4px 4px 4px 4px;
@@ -75,9 +77,10 @@ require_once('controller\map_controll.php');
   </nav>
   <nav class="navbar navbar-inverse bg-primary navbar-fixed-top">
     <a class="navbar-brand" href="index.php"><img src="img/logo_fit3_white.png" style="max-width:120px; margin: -7px;" name="Inicio"></a>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="vendor.php">Create vendor</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="vendor.php">Add vendor</a>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="client.php">Add client</a></li>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="order.php">Add order</a></li>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="mod_order.php">Dashboard order</a></li>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" href="mod_order.php">Order Dashboard</a></li>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand" target="_blank" href="https://www.negotiatus.com/">Negotiatus page</a></li>
 
 
@@ -99,7 +102,7 @@ require_once('controller\map_controll.php');
 <!-- Text input-->
 <div class="form-group">
 
-  <label class="col-md-4 control-label" for="idOrder">Id order</label>
+  <label class="col-md-4 control-label" for="idOrder">ID order</label>
   <div class="col-md-4">
   <input id="order" name="order" placeholder="Id order" class="form-control input-md" required="true" type="number" min ='1' max="100000000000000"/>
 
@@ -119,29 +122,13 @@ require_once('controller\map_controll.php');
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="dis">Type_id: </label>
+  <label class="col-md-4 control-label" for="dis">ID client: </label>
   <div class="col-md-4">
 
         <?php
           //print the value.
-          echo ($_SESSION["type_id"]);
-          unset($_SESSION["type_id"]);
-        ?>
-
-  </div>
-</div>
-
-
-
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="dis">Id receiver: </label>
-  <div class="col-md-4">
-
-        <?php
-          //print the value.
-          echo ($_SESSION["id_receiver"]);
-          unset($_SESSION["id_receiver"]);
+          echo ($_SESSION["id_client"]);
+          unset($_SESSION["id_client"]);
         ?>
 
   </div>
@@ -149,13 +136,13 @@ require_once('controller\map_controll.php');
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="dis">Name receiver: </label>
+  <label class="col-md-4 control-label" for="dis">Name client: </label>
   <div class="col-md-4">
 
         <?php
           //print the value.
-          echo ($_SESSION["name_receiver"]);
-          unset($_SESSION["name_receiver"]);
+          echo ($_SESSION["name_client"]);
+          unset($_SESSION["name_client"]);
         ?>
 
   </div>
@@ -163,13 +150,13 @@ require_once('controller\map_controll.php');
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="dis">Address receiver: </label>
+  <label class="col-md-4 control-label" for="dis">Address Client: </label>
   <div class="col-md-4">
 
         <?php
           //print the value.
-          echo ($_SESSION["address_receiver"]);
-          unset($_SESSION["address_receiver"]);
+          echo ($_SESSION["address_client"]);
+          unset($_SESSION["address_client"]);
         ?>
 
   </div>
@@ -182,8 +169,8 @@ require_once('controller\map_controll.php');
 
         <?php
           //print the value.
-          echo ($_SESSION["city_receiver"]);
-          unset($_SESSION["city_receiver"]);
+          echo ($_SESSION["name_city"]);
+          unset($_SESSION["name_city"]);
         ?>
 
   </div>
@@ -248,13 +235,13 @@ require_once('controller\map_controll.php');
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="dis">Departure date: </label>
+  <label class="col-md-4 control-label" for="dis">Expected date: </label>
   <div class="col-md-4">
 
         <?php
           //print the value.
-          echo ($_SESSION["departure_date"]);
-          unset($_SESSION["departure_date"]);
+          echo ($_SESSION["expected_date"]);
+          unset($_SESSION["expected_date"]);
         ?>
 
   </div>
@@ -275,47 +262,10 @@ require_once('controller\map_controll.php');
 <div class="container" >
 <div class="col-xs-6 .col-md-4">
 
-<form class="form-horizontal" action="controller\mark_delivered.php" role="form" method="POST">
-<fieldset>
-  <!-- Text input-->
-  <legend><center>Modify order</center></legend>
-  <div class="form-group">
-
-    <label class="col-md-4 control-label" for="order_to_mark">Id order</label>
-    <div class="col-md-4">
-    <input id="order_to_mark" name="order_to_mark" placeholder="Id order" class="form-control input-md" required="true" type="number" min ='1' max="100000000000000"/>
-
-    </div>
-  </div>
-
-  <!-- Select Basic -->
-  <div class="form-group">
-    <label class="col-md-4 control-label" for="status">Status</label>
-    <div class="col-md-4">
-      <select id="status" name="status" class="form-control">
-        <option value="2">Delivered</option>
-        <option value="1">canceled</option>
-      </select>
-    </div>
-
-    <button id="send" name="send" class="btn btn-primary">Send</button>
-
-    <?php
-    $_SESSION['resp']
-     ?>
-  </div>
-
- </form>
-</div>
-</div>
-
-<div class="row">
   <div class="container">
           <div class="row">
               <div class="col-xs-12 .col-md-8">
-                <h1 style="text-align: center;">Map</h1>
-
-                <br>
+                
                 <div style="text-align: center;">
                     <kbd><kbd>Latitude:</kbd><?=$latitude?>, <kbd>Longitude:</kbd><?=$longitude?></kbd>
                 </div>
@@ -326,6 +276,44 @@ require_once('controller\map_controll.php');
               <div id="map"></div>
           </div>
       </div>
+
+
+</div>
+</div>
+
+<div class="row">
+  <form class="form-horizontal" action="controller\mark_delivered.php" role="form" method="POST">
+  <fieldset>
+    <!-- Text input-->
+    <legend><center>Modify order</center></legend>
+    <div class="form-group">
+
+      <label class="col-md-4 control-label" for="order_to_mark">Id order</label>
+      <div class="col-md-4">
+      <input id="order_to_mark" name="order_to_mark" placeholder="Id order" class="form-control input-md" required="true" type="number" min ='1' max="100000000000000"/>
+
+      </div>
+    </div>
+
+
+    <!-- Select Basic -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="status">Status</label>
+      <div class="col-md-4">
+        <select id="status" name="status" class="form-control">
+          <option value="2">Delivered</option>
+          <option value="1">canceled</option>
+        </select>
+      </div>
+
+      <button id="send" name="send" class="btn btn-primary">Send</button>
+
+      <?php
+      $_SESSION['resp']
+       ?>
+    </div>
+
+   </form>
 
 </div>
 

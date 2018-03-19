@@ -14,18 +14,17 @@ require_once('../model/connection.php');
 $id_vendor = filter_input(INPUT_POST, 'id_vendor');
 $name_vendor = filter_input(INPUT_POST, 'name_vendor');
 $city = filter_input(INPUT_POST, 'city');
-$address_vendor = filter_input(INPUT_POST, 'address_vendor');
 
+//******************************************************************************
 
 //Query
-$sql_insert_vendor = "INSERT INTO table_vendor (id_vendor, name_vendor, city_vendor, address_vendor)
-VALUES ('$id_vendor', '$name_vendor', '$city', '$address_vendor');";
+$sql_insert_vendor = "INSERT INTO `vendor`(`id_vendor`, `name_vendor`, `city_vendor`) VALUES ('$id_vendor','$name_vendor','$city');";
 
 //Validation
 if ($connection->query($sql_insert_vendor) === TRUE) {
     echo $_SESSION['resp'] ="Vendor is now in the Database.";
 } else {
-    echo $_SESSION['resp']  = "Error: " . $sql_insert_vendor . "<br>". mysqli_error($connection);
+    echo $_SESSION['resp']  = "Error: " . $sql_insert_vendor . "<br>". $mysqli->error;
 }
 
 //Finish connection and return

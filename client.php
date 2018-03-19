@@ -1,15 +1,15 @@
 <?php
-//Start session and unnable the notice
+//Start the session and unnable the notice
 error_reporting(E_ALL ^ E_NOTICE);
 session_start();
 //Connection
 require_once('model/connection.php');
 //This is the query to print the db data in the table
-$query_vendor ="SELECT v.id_vendor, v.name_vendor, c.name_city
-FROM vendor v, city c
-WHERE c.id_city = v.city_vendor
-ORDER BY id_vendor DESC";
-$result_vendor = mysqli_query($connection ,$query_vendor);
+$query_client ="SELECT cl.id_client, cl.name_client, c.name_city, cl.address_client
+FROM client cl, city c
+WHERE c.id_city = cl.city_client
+ORDER BY cl.id_client DESC";
+$result_client = mysqli_query($connection ,$query_client);
 
 //This is the query to print the db data of city in the form
 $query_city ="SELECT * FROM  city";
@@ -61,28 +61,28 @@ $result_city = mysqli_query($connection ,$query_city);
       </nav>
 <div class = "container">
 <!--Input  form vendor-->
-    <form class="form-horizontal" action="controller/insert_vendor.php" role="form" method="POST">
+    <form class="form-horizontal" action="controller/insert_client.php" role="form" method="POST">
 <fieldset>
 
-<!-- Form Name -->
-<legend><center>Add Vendor</center></legend>
+  <!-- Form Name -->
+  <legend><center>Add Client</center></legend>
+
 
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Idvendor">ID vendor</label>
+  <label class="col-md-4 control-label" for="id_receiver">ID Client</label>
   <div class="col-md-4">
-  <input id="id_vendor" name="id_vendor" placeholder="ID vendor" class="form-control input-md" required="true" type="text">
+  <input id="idreceiv" name="idreceiv" placeholder="Example: 10225488874" class="form-control input-md" required="true" type="number" min="1" max="1000000">
 
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="name">Name vendor</label>
+  <label class="col-md-4 control-label" for="name">Name</label>
   <div class="col-md-4">
-  <input id="name_vendor" name="name_vendor" placeholder="Example: Amazon Spain" class="form-control input-md" required="true" type="text">
-
+  <input id="name" name="name" placeholder="Tesla Motors San Francisco" class="form-control input-md" required="true" type="text">
   </div>
 </div>
 
@@ -97,7 +97,7 @@ $result_city = mysqli_query($connection ,$query_city);
       <?php
       while($row_city = mysqli_fetch_array($result_city))
       {
-          //Print the values of the table
+          //Print the values of the tabler
           $option_city = '<option value = "'.$row_city["id_city"].'">'.$row_city["name_city"].'</option>';
           echo utf8_encode ($option_city);
       }
@@ -105,6 +105,25 @@ $result_city = mysqli_query($connection ,$query_city);
       ?>
 
     </select>
+  </div>
+</div>
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Telephone">Telephone</label>
+  <div class="col-md-4">
+  <input id="phone" name="phone" placeholder="Example: 966588745" class="form-control input-md" required="true"  type="number" min ='1' max="100000000"/>
+
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="email">Address</label>
+  <div class="col-md-4">
+  <input id="addr" name="addr" placeholder="Example: '3500 Deer Creek Road Palo Alto'" class="form-control input-md" type="text" maxlength="50" required="true" >
+
   </div>
 </div>
 
@@ -144,20 +163,22 @@ $result_city = mysqli_query($connection ,$query_city);
               <table id="employee_data" class="table table-striped table-bordered">
               <thead>
                    <tr>
-                        <td>ID</td>
-                        <td>Name</td>
-                        <td>City</td>
+                     <td>ID</td>
+                     <td>Name</td>
+                     <td>City</td>
+                     <td>Address</td>
                    </tr>
               </thead>
               <?php
-              while($row_vendor = mysqli_fetch_array($result_vendor))
+              while($row_client = mysqli_fetch_array($result_client))
               {
-                  //Print the values of the table vendor
+                  //Print the values of the table client.
                   echo '
                    <tr>
-                        <td>'.$row_vendor["id_vendor"].'</td>
-                        <td>'.utf8_encode ( $row_vendor["name_vendor"]).'</td>
-                        <td>'.utf8_encode ( $row_vendor["name_city"]).'</td>
+                        <td>'.$row_client["id_client"].'</td>
+                        <td>'.utf8_encode ( $row_client["name_client"]).'</td>
+                        <td>'.utf8_encode ( $row_client["name_city"]).'</td>
+                        <td>'.utf8_encode ( $row_client["address_client"]).'</td>
                    </tr>
                    ';
               }
