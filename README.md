@@ -24,12 +24,15 @@ This app work as administrator of shipment, the application calculate based in t
 # USE
 If you want start use this aplication you need create the database shiping_db and import the archive `shiping_db_seed.sql` located in [the seed](https://github.com/halcolo/Shiping_app/tree/master/seed) directory.
 The Database credentials can be change in the archive `connection.php` located in the [model](https://github.com/halcolo/Shiping_app/tree/master/model) directory , the work enviroment is:
- | Aplication| Version|
+
+
+| Aplication| Version|
 | ------ | ------ |
 | PHP| `PHP v 5.7.19` |
 | MySql| `MySql v 5.7.19` |
 | Apache | `Apache 2.4.27` |
 | PhpMyAdmin | `PhpMyAdmin v 4.7.4`  |
+
 
 
 And the database have the next estructure:
